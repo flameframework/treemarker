@@ -1,7 +1,8 @@
 package com.github.mvollebregt.flame.compiler
 
 import com.github.mvollebregt.util.AutoCloseableUtils._
-import com.github.mvollebregt.flame.compiler.domain.InteractionModel
+import com.github.mvollebregt.flame.compiler.domain.{DomainClass, InteractionModel}
+import com.github.mvollebregt.util.PathScanner
 import freemarker.template.{TemplateExceptionHandler, Configuration}
 
 /**
@@ -19,6 +20,12 @@ object Generator {
 
   def process(template: String, model: InteractionModel) = {
     val temp = templateReader.getTemplate(template)
-    temp.process(model, new FreemarkerWriterWrapper(template, templateWriter))
+    val writer = new FreemarkerWriterWrapper(template, templateWriter)
+    temp.process(model, writer)
+    writer.close
+  }
+
+  def main(args: Array[String]) = {
+    generate("swift", InteractionModel(java.util.Arrays.asList(DomainClass("foo"), DomainClass("bar"))))
   }
 }

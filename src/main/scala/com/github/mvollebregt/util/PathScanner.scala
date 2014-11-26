@@ -19,15 +19,9 @@ object PathScanner  {
   def entriesFor(directoryOrJarFile: String) : Iterable[String] = {
     val file = new File(directoryOrJarFile)
     if (file.isDirectory) {
-      directoryEntries(file)
+      directoryEntries(file).map(_.substring(file.getCanonicalPath.size + 1))
     } else {
       jarFileEntries(file)
-    }
-  }
-
-  def jarFileEntries(file: File) : Iterable[String] = {
-    tryWithResource(new ZipFile(file)) { zip =>
-      for (entry <- zip.entries.asScala.toList) yield entry.getName
     }
   }
 
@@ -38,6 +32,12 @@ object PathScanner  {
       } else {
         Seq(file.getCanonicalPath)
       }
+    }
+  }
+
+  def jarFileEntries(file: File) : Iterable[String] = {
+    tryWithResource(new ZipFile(file)) { zip =>
+      for (entry <- zip.entries.asScala.toList) yield entry.getName
     }
   }
 }

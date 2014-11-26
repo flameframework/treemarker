@@ -25,7 +25,10 @@ class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWrite
 
   override def flush(): Unit = ()
 
-  override def close(): Unit = writeAll(0)
+  override def close(): Unit = {
+    writeAll(0)
+    while (writers.nonEmpty) writers.pop.close
+  }
 
   private def writeAll(offset: Int) : Unit = {
     val text = buffer.toString.substring(offset)

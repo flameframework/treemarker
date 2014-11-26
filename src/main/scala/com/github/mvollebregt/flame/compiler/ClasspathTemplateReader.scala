@@ -1,6 +1,6 @@
 package com.github.mvollebregt.flame.compiler
 
-import com.github.mvollebregt.util.classpath.PathScanner._
+import com.github.mvollebregt.util.PathScanner._
 import com.github.mvollebregt.util.StringUtils._
 import freemarker.template.{Template, TemplateExceptionHandler, Configuration}
 
@@ -10,7 +10,7 @@ import freemarker.template.{Template, TemplateExceptionHandler, Configuration}
 class ClasspathTemplateReader {
 
   val cfg = new Configuration(Configuration.VERSION_2_3_21)
-  cfg.setClassForTemplateLoading(getClass, "")
+  cfg.setClassForTemplateLoading(getClass, "/")
   cfg.setDefaultEncoding("UTF-8")
   cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER)
 

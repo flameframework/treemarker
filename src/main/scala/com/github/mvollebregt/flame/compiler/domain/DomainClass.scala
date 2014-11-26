@@ -3,9 +3,14 @@ package com.github.mvollebregt.flame.compiler.domain
 /**
  * Abstract representation for a domain object.
  */
-case class DomainClass(
+class DomainClass(name : String) {
 
-  name : String
+  def getName = name
 
+}
 
-)
+object DomainClass {
+
+  def apply(name: String) = new DomainClass(name)
+
+}
