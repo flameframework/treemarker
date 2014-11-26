@@ -26,6 +26,6 @@ object Generator {
   }
 
   def main(args: Array[String]) = {
-    generate("swift", InteractionModel(java.util.Arrays.asList(DomainClass("foo"), DomainClass("bar"))))
+    generate("swift", InteractionModel(Seq(DomainClass("Foo"), DomainClass("Bar"))))
   }
 }

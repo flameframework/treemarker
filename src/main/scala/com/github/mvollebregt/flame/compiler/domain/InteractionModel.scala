@@ -1,9 +1,11 @@
 package com.github.mvollebregt.flame.compiler.domain
 
+import scala.collection.JavaConversions._
+
 /**
  * Created by michel on 16-11-14.
  */
-class InteractionModel (domainClasses : java.util.List[DomainClass]) {
+class InteractionModel (domainClasses : java.lang.Iterable[DomainClass]) {
 
   def getDomainClasses = domainClasses
 
@@ -11,6 +13,8 @@ class InteractionModel (domainClasses : java.util.List[DomainClass]) {
 
 object InteractionModel {
 
-  def apply(domainClasses: java.util.List[DomainClass]) = new InteractionModel(domainClasses)
+  def apply(domainClasses: java.lang.Iterable[DomainClass]) = new InteractionModel(domainClasses)
+
+  def apply(domainClasses: Seq[DomainClass]) = new InteractionModel(domainClasses)
 
 }
