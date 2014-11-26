@@ -5,6 +5,6 @@ package com.github.mvollebregt.flame.compiler.domain
  */
 case class InteractionModel (
 
-  val domainClasses : Traversable[DomainClass]
+  domainClasses : Traversable[DomainClass]
 
 )

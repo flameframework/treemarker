@@ -1,4 +1,4 @@
-package com.github.mvollebregt.util.classpath
+package com.github.mvollebregt.util
 
 import scala.collection.JavaConverters._
 import java.io.File

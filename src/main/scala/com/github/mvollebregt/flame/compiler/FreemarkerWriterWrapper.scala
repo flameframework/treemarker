@@ -49,8 +49,8 @@ class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWrite
     if (file.isDefined) {
       writers.push(templateWriter.getWriterFor(file.get))
     } else if (endtag.isDefined) {
-      writers.top.close
-      writers.pop
+      writers.top.close()
+      writers.pop()
     }
     m.end
   }

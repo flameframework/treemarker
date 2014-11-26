@@ -24,7 +24,7 @@ class FreemarkerWriterWrapperTest extends FlatSpec with MockitoSugar {
   "A template without file output markers" should "write a copy of the template to the default file" in new Fixture {
     // when
     processor.print("a template without file output markers")
-    processor.close
+    processor.close()
     // then
     assert(defaultOutput.toString == "a template without file output markers")
   }
@@ -36,7 +36,7 @@ class FreemarkerWriterWrapperTest extends FlatSpec with MockitoSugar {
     when(templateWriter.getWriterFor("specified name")).thenReturn(specifiedOutput)
     // when
     processor.println("<&output file='specified name'>inner contents</&output>")
-    processor.close
+    processor.close()
     // then
     assert(specifiedOutput.toString == "inner contents")
   }
@@ -48,7 +48,7 @@ class FreemarkerWriterWrapperTest extends FlatSpec with MockitoSugar {
     when(templateWriter.getWriterFor("another specified name")).thenReturn(specifiedOutput)
     // when
     processor.println("<&output file=\"another specified name\">other inner contents</&output>")
-    processor.close
+    processor.close()
     // then
     assert(specifiedOutput.toString == "other inner contents")
   }

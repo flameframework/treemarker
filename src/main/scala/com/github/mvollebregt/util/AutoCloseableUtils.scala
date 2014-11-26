@@ -11,7 +11,7 @@ object AutoCloseableUtils {
     try {
       f(closable)
     } finally {
-      closable.close
+      closable.close()
     }
   }
 
