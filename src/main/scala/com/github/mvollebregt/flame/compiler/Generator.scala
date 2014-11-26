@@ -10,19 +10,17 @@ import freemarker.template.{TemplateExceptionHandler, Configuration}
  */
 object Generator {
 
-  val templateReader = new ClasspathTemplateReader
-  val templateWriter = new FileSystemTemplateWriter
+  def generate(platform: String, interactionModel: InteractionModel): Unit = {
 
-  def generate(platform: String, interactionModel: InteractionModel): Unit =
-    for (template <- templateReader.listTemplates(platform)) {
-        process(template, interactionModel)
+    val templateReader = new ClasspathTemplateReader(platform)
+    val templateWriter = new FileSystemTemplateWriter
+
+    for (template <- templateReader.listTemplates) {
+      val temp = templateReader.getTemplate(template)
+      tryWithResource(new FreemarkerWriterWrapper(template, templateWriter)) { writer =>
+        temp.process(interactionModel, writer)
+      }
     }
-
-  def process(template: String, model: InteractionModel) = {
-    val temp = templateReader.getTemplate(template)
-    val writer = new FreemarkerWriterWrapper(template, templateWriter)
-    temp.process(model, writer)
-    writer.close
   }
 
   def main(args: Array[String]) = {

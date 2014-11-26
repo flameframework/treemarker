@@ -9,7 +9,7 @@ class FileSystemTemplateWriter extends TemplateWriter {
 
   def getWriterFor(template: String) : Writer = {
     val file = new File(template)
-    file.getParentFile.mkdirs()
+    if (file.getParentFile != null) file.getParentFile.mkdirs()
     new FileWriter(template)
   }
 

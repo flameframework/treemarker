@@ -19,18 +19,20 @@ object PathScanner  {
   def entriesFor(directoryOrJarFile: String) : Iterable[String] = {
     val file = new File(directoryOrJarFile)
     if (file.isDirectory) {
-      directoryEntries(file).map(_.substring(file.getCanonicalPath.size + 1))
+      directoryEntries(file)
     } else {
       jarFileEntries(file)
     }
   }
 
-  def directoryEntries(directory : File) : Iterable[String] = {
+  def directoryEntries(directory: File) : Iterable[String] = directoryEntries(directory, directory.getCanonicalPath.size + 1)
+
+  private def directoryEntries(directory : File, prefixLength : Int) : Iterable[String] = {
     directory.listFiles().flatMap { file =>
       if (file.isDirectory) {
-        directoryEntries(file)
+        directoryEntries(file, prefixLength)
       } else {
-        Seq(file.getCanonicalPath)
+        Seq(file.getCanonicalPath.substring(prefixLength))
       }
     }
   }

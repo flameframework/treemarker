@@ -5,8 +5,6 @@ package com.github.mvollebregt.util
  */
 object AutoCloseableUtils {
 
-  // TODO use scala ARM?!?
-
   def tryWithResource[A <: AutoCloseable, B](closable : A)(f : A => B) : B = {
     try {
       f(closable)

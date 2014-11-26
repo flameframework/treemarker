@@ -7,19 +7,17 @@ import freemarker.template.{Template, TemplateExceptionHandler, Configuration}
 /**
  * Created by michel on 21-11-14.
  */
-class ClasspathTemplateReader {
+class ClasspathTemplateReader(platform : String) {
 
-  val cfg = new Configuration(Configuration.VERSION_2_3_21)
-  cfg.setClassForTemplateLoading(getClass, "/")
+  private val classpathPrefix = s"flame/$platform/"
+
+  private val cfg = new Configuration(Configuration.VERSION_2_3_21)
+  cfg.setClassForTemplateLoading(getClass, "/" + classpathPrefix)
   cfg.setDefaultEncoding("UTF-8")
   cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER)
 
-  private def classpathPattern(platform : String) = s"flame/$platform/.*".r
-
-  def listTemplates(platform: String) : Iterable[String] = {
-    val pattern = classpathPattern(platform)
-    classpathEntries.filter(_.matches(pattern))
-  }
+  def listTemplates : Iterable[String] =
+    classpathEntries.filter(_.startsWith(classpathPrefix)).map(_.substring(classpathPrefix.size))
 
   def getTemplate(template: String) : Template = cfg.getTemplate(template)
 
