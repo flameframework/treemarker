@@ -1,7 +1,6 @@
 package com.github.mvollebregt.flame.compiler
 
 import com.github.mvollebregt.util.PathScanner._
-import com.github.mvollebregt.util.StringUtils._
 import freemarker.template.{Version, Template, TemplateExceptionHandler, Configuration}
 
 /**

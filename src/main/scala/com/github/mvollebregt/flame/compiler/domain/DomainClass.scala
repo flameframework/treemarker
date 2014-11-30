@@ -11,10 +11,6 @@ class DomainClass(name : String, properties: java.lang.Iterable[Property]) {
 
   def getProperties = properties
 
-  // TODO register custom String converter for FreeMarker for type String -> NSString etc
-  // setObjectWrapper?!?
-
-
 }
 
 object DomainClass {
