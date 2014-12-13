@@ -2,6 +2,7 @@ package com.github.mvollebregt.flame.compiler
 
 import java.io.File
 
+import com.github.mvollebregt.flame.compiler.action.InteractionModel
 import com.github.mvollebregt.util.AutoCloseableUtils._
 import com.github.mvollebregt.flame.compiler.domain._
 
@@ -24,6 +25,10 @@ object Generator {
   }
 
   def main(args: Array[String]) = {
-    generate("swift", "output", InteractionModel(Seq(DomainClass("Foo", Seq(Property("text", Type.String))), DomainClass("Bar"))))
+    generate("swift", "output", InteractionModel(
+      Seq(DomainClass("Foo", Seq(Variable("text", StringType))), DomainClass("Bar")),
+      Nil,
+      Nil
+    ))
   }
 }

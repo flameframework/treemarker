@@ -12,10 +12,10 @@ class FlameObjectWrapper(version: Version) extends DefaultObjectWrapper(version)
 
   override def wrap(obj: scala.Any): TemplateModel =
     obj match {
-      case (objectType: Type.Type) => wrap(objectType)
+      case (objectType: NativeType) => wrap(objectType)
       case _ => super.wrap(obj)
     }
 
-  private def wrap(objectType: Type.Type) = new SimpleScalar(s"NS${objectType}")
+  private def wrap(objectType: NativeType) = new SimpleScalar(s"NS${objectType}".dropRight(4))
 
 }
