@@ -8,7 +8,7 @@ import scala.collection.JavaConversions._
  * Created by michel on 16-11-14.
  */
 class InteractionModel (domainClasses : java.lang.Iterable[DomainClass] ,
-                        nativeActions: java.lang.Iterable[NativeAction],
+                        nativeActions: java.lang.Iterable[Action],
                         composedActions : java.lang.Iterable[ComposedAction]) {
 
   def getDomainClasses = domainClasses
@@ -19,7 +19,7 @@ class InteractionModel (domainClasses : java.lang.Iterable[DomainClass] ,
 
 object InteractionModel {
 
-  def apply(domainClasses: Seq[DomainClass], nativeActions : Seq[NativeAction], composedActions: Seq[ComposedAction]) =
+  def apply(domainClasses: Seq[DomainClass], nativeActions : Seq[Action], composedActions: Seq[ComposedAction]) =
     new InteractionModel(domainClasses, nativeActions, composedActions)
 
 }

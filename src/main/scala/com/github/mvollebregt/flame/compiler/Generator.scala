@@ -2,7 +2,7 @@ package com.github.mvollebregt.flame.compiler
 
 import java.io.File
 
-import com.github.mvollebregt.flame.compiler.action.InteractionModel
+import com.github.mvollebregt.flame.compiler.action.{ComposedAction, Action, InteractionModel}
 import com.github.mvollebregt.util.AutoCloseableUtils._
 import com.github.mvollebregt.flame.compiler.domain._
 
@@ -25,10 +25,16 @@ object Generator {
   }
 
   def main(args: Array[String]) = {
+
+    val mail = DomainClass("Mail", Seq(Variable("from", StringType), Variable("to", StringType), Variable("body", StringType)))
+    val inbox = DomainClass("Inbox", Seq(Variable("mails", ListType(mail))))
+
+    val refresh = Action("RefreshInbox", inputs = Seq(Variable("inbox", inbox)))
+
     generate("swift", "output", InteractionModel(
-      Seq(DomainClass("Foo", Seq(Variable("text", StringType))), DomainClass("Bar")),
-      Nil,
-      Nil
+      Seq(inbox, mail),
+      Seq(refresh),
+      Seq()
     ))
   }
 }
