@@ -1,6 +1,7 @@
 package com.github.mvollebregt.flame.compiler
 
 import com.github.mvollebregt.flame.compiler.domain._
+import freemarker.ext.beans.{BeanModel, BeansWrapper}
 
 import freemarker.template._
 
@@ -12,16 +13,18 @@ class FlameObjectWrapper(version: Version) extends DefaultObjectWrapper(version)
 
   override def wrap(obj: scala.Any): TemplateModel =
     obj match {
-      case (nativeTypeIdentifier: NativeTypeIdentifier) => wrap(nativeTypeIdentifier)
-      case (domainClassIdentifier: DomainClassIdentifier) => wrap(domainClassIdentifier)
-      case (ListTypeIdentifier(listType : DomainClass)) => wrap(listType)
+      case (typeObj: Type) => wrap(typeObj, asString(typeObj))
       case _ => super.wrap(obj)
     }
 
-  private def wrap(objectTypeIdentifier: NativeTypeIdentifier) = new SimpleScalar(s"NS${objectTypeIdentifier.name}")
+  private def asString(typeObj : Type) : String = typeObj match {
+    case (nativeType: NativeType) => s"NS${nativeType}".dropRight(4)
+    case (domainClass: DomainClass) => domainClass.getName
+    case (listType: ListType) => s"[${asString(listType.itemType)}]"
+  }
 
-  private def wrap(domainClassIdentifier: DomainClassIdentifier) = new SimpleScalar(domainClassIdentifier.name)
-
-  private def wrap(listType: DomainClass) = new SimpleScalar(s"[NS${listType.getName.name}]")
+  private def wrap(obj: Object, valueAsString: String) = new BeanModel(obj, this) with TemplateScalarModel {
+    override def getAsString: String = valueAsString
+  }
 
 }

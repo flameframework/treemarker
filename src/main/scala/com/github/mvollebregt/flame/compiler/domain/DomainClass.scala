@@ -9,7 +9,7 @@ case class DomainClassIdentifier(name: String)
  */
 class DomainClass(name : String, properties: java.lang.Iterable[Variable]) extends Type {
 
-  def getName = DomainClassIdentifier(name)
+  def getName = name
   def getProperties = properties
 
 }
