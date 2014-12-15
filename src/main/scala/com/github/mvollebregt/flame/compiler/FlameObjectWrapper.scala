@@ -18,7 +18,7 @@ class FlameObjectWrapper(version: Version) extends DefaultObjectWrapper(version)
     }
 
   private def asString(typeObj : Type) : String = typeObj match {
-    case (nativeType: NativeType) => s"NS${nativeType}".dropRight(4)
+    case (nativeType: NativeType) => s"NS$nativeType".dropRight(4)
     case (domainClass: DomainClass) => domainClass.getName
     case (listType: ListType) => s"[${asString(listType.itemType)}]"
   }

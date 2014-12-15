@@ -1,6 +1,6 @@
 package com.github.mvollebregt.flame.compiler
 
-import scala.collection.mutable.Stack
+import scala.collection.mutable
 import scala.util.matching.Regex
 import scala.util.matching.Regex._
 import java.io.{StringWriter, Writer}
@@ -16,7 +16,7 @@ class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWrite
 
   val anyTag = new Regex(s"(?:$startTagSingleQuote)|(?:$startTagDoubleQuote)|($endTag)", "filesq", "filedq", "end")
   private val buffer = new StringWriter()
-  val writers = new Stack[Writer]
+  val writers = new mutable.Stack[Writer]
   writers.push(templateWriter.getWriterFor(defaultFile))
 
   override def write(cbuf: Array[Char], off: Int, len: Int): Unit = {
@@ -27,7 +27,7 @@ class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWrite
 
   override def close(): Unit = {
     writeAll(0)
-    while (writers.nonEmpty) writers.pop.close
+    while (writers.nonEmpty) writers.pop().close()
   }
 
   private def writeAll(offset: Int) : Unit = {

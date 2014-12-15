@@ -19,6 +19,6 @@ class ComposedAction(name: String,
 object ComposedAction {
 
   def apply(name: String, inputs: Seq[Variable] = Nil, output: Option[Type] = None, actions: Seq[Action]) =
-    new ComposedAction(name, inputs, output.getOrElse(null), actions)
+    new ComposedAction(name, inputs, output.orNull, actions)
 
 }

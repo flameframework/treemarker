@@ -20,6 +20,6 @@ class Action(name: String,
 object Action {
 
   def apply(name: String, inputs: Seq[Variable] = Nil, output: Option[Type] = None) =
-    new Action(name, inputs, output.getOrElse(null))
+    new Action(name, inputs, output.orNull)
 
 }
