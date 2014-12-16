@@ -8,18 +8,18 @@ import scala.collection.JavaConversions._
  * Created by michel on 13-12-14.
  */
 class Action(name: String,
-                      inputs: java.lang.Iterable[Variable] = Nil,
-                      output: Type = null) {
+                      inputVariables: java.lang.Iterable[Variable] = Nil,
+                      outputType: Type = null) {
 
   def getName = name
-  def getInputs = inputs
-  def getOutput = output
+  def getInputVariables = inputVariables
+  def getOutputType = outputType
 
 }
 
 object Action {
 
-  def apply(name: String, inputs: Seq[Variable] = Nil, output: Option[Type] = None) =
-    new Action(name, inputs, output.orNull)
+  def apply(name: String, inputVariables: Seq[Variable] = Nil, outputType: Option[Type] = None) =
+    new Action(name, inputVariables, outputType.orNull)
 
 }

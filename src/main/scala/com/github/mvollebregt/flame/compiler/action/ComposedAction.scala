@@ -8,17 +8,18 @@ import scala.collection.JavaConversions._
  * Created by michel on 13-12-14.
  */
 class ComposedAction(name: String,
-                      inputs: java.lang.Iterable[Variable],
-                      output: Type,
-                      actions: java.lang.Iterable[Action]) extends Action(name, inputs, output) {
+                      inputVariables: java.lang.Iterable[Variable],
+                      outputVariable: Variable,
+                      actionCalls: java.lang.Iterable[ActionCall]) extends Action(name, inputVariables, outputVariable.getType) {
 
-  def getActions = actions
+  val getActionCalls = actionCalls
+  val getOutputVariable = outputVariable
 
 }
 
 object ComposedAction {
 
-  def apply(name: String, inputs: Seq[Variable] = Nil, output: Option[Type] = None, actions: Seq[Action]) =
-    new ComposedAction(name, inputs, output.orNull, actions)
+  def apply(name: String, inputVariables: Seq[Variable] = Nil, outputVariable: Option[Variable] = None, actionCalls: Seq[ActionCall]) =
+    new ComposedAction(name, inputVariables, outputVariable.orNull, actionCalls)
 
 }

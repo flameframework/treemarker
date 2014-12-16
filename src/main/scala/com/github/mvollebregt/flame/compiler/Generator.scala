@@ -2,7 +2,7 @@ package com.github.mvollebregt.flame.compiler
 
 import java.io.File
 
-import com.github.mvollebregt.flame.compiler.action.{ComposedAction, Action, InteractionModel}
+import com.github.mvollebregt.flame.compiler.action.{ActionCall, ComposedAction, Action, InteractionModel}
 import com.github.mvollebregt.util.AutoCloseableUtils._
 import com.github.mvollebregt.flame.compiler.domain._
 
@@ -26,15 +26,32 @@ object Generator {
 
   def main(args: Array[String]) = {
 
-    val mail = DomainClass("Mail", Seq(Variable("from", StringType), Variable("to", StringType), Variable("body", StringType)))
-    val inbox = DomainClass("Inbox", Seq(Variable("mails", ListType(mail))))
+    val from = Variable("from", StringType)
+    val to = Variable("to", StringType)
+    val body = Variable("body", StringType)
+    val Mail = DomainClass("Mail", Seq(from, to, body))
+    val mail = Variable("mail", Mail)
 
-    val refresh = Action("RefreshInbox", inputs = Seq(Variable("inbox", inbox)))
+    val mails = Variable("mails", ListType(Mail))
+    val Inbox = DomainClass("Inbox", Seq(mails))
+    val inbox = Variable("inbox", Inbox)
+
+    val obj = Variable("object", ListType(Mail))
+
+    val refresh = Action("RefreshInbox", inputVariables = Seq(inbox), outputType = Some(IntegerType))
+    val view = Action("View", inputVariables = Seq(obj), outputType = Some(IntegerType))
+
+    val open = ComposedAction("OpenInbox", inputVariables = Seq(inbox),
+      outputVariable = Some(Variable("newItemCount", IntegerType)),
+      actionCalls = Seq(
+      ActionCall(refresh, Seq(inbox)),
+      ActionCall(view, Seq(PropertyValue(inbox, mails)), Some(Variable("newItemCount", IntegerType)))
+    ))
 
     generate("swift", "output", InteractionModel(
-      Seq(inbox, mail),
-      Seq(refresh),
-      Seq()
+      Seq(Inbox, Mail),
+      Seq(refresh, view),
+      Seq(open)
     ))
   }
 }

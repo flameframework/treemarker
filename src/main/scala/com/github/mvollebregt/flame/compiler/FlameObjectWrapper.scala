@@ -14,13 +14,20 @@ class FlameObjectWrapper(version: Version) extends DefaultObjectWrapper(version)
   override def wrap(obj: scala.Any): TemplateModel =
     obj match {
       case (typeObj: Type) => wrap(typeObj, asString(typeObj))
+      case (value: Value) => wrap(value, asString(value))
       case _ => super.wrap(obj)
     }
 
   private def asString(typeObj : Type) : String = typeObj match {
-    case (nativeType: NativeType) => s"NS$nativeType".dropRight(4)
+    case (IntegerType) => "Int"
+    case (StringType) => "String"
     case (domainClass: DomainClass) => domainClass.getName
     case (listType: ListType) => s"[${asString(listType.itemType)}]"
+  }
+
+  private def asString(value: Value) : String = value match {
+    case (variable: Variable) => variable.getName
+    case (property : PropertyValue) => s"${asString(property.getObject)}.${property.getProperty.getName}"
   }
 
   private def wrap(obj: Object, valueAsString: String) = new BeanModel(obj, this) with TemplateScalarModel {

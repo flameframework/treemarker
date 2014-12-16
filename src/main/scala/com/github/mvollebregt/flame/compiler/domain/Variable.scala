@@ -3,7 +3,7 @@ package com.github.mvollebregt.flame.compiler.domain
 /**
  * Created by michel on 30-11-14.
  */
-class Variable(name: String, variableType: Type) {
+class Variable(name: String, variableType: Type) extends Value {
 
   def getName = name
   def getType = variableType

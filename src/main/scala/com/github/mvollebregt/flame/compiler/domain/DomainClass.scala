@@ -2,8 +2,6 @@ package com.github.mvollebregt.flame.compiler.domain
 
 import scala.collection.JavaConversions._
 
-case class DomainClassIdentifier(name: String)
-
 /**
  * Abstract representation for a domain object.
  */
