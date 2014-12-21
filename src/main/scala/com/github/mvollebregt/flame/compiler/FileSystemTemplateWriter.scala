@@ -7,8 +7,9 @@ import java.io.{File, FileWriter, Writer}
  */
 class FileSystemTemplateWriter(target: File) extends TemplateWriter {
 
-  def getWriterFor(template: String) : Writer = {
-    val file = new File(target, template)
+  def getWriterFor(template: String, output: Option[String]) : Writer = {
+    val base = new File(target, template)
+    val file = output.map(out => new File(base.getParent, out)).getOrElse(base)
     if (file.getParentFile != null) file.getParentFile.mkdirs()
     new FileWriter(file)
   }

@@ -7,6 +7,6 @@ import java.io.{Writer, FileOutputStream, OutputStream}
  */
 trait TemplateWriter {
 
-  def getWriterFor(template: String) : Writer
+  def getWriterFor(template: String, output: Option[String] = None) : Writer
 
 }

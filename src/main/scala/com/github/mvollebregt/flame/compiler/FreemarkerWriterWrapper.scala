@@ -17,7 +17,12 @@ class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWrite
   val anyTag = new Regex(s"(?:$startTagSingleQuote)|(?:$startTagDoubleQuote)|($endTag)", "filesq", "filedq", "end")
   private val buffer = new StringWriter()
   val writers = new mutable.Stack[Writer]
-  writers.push(templateWriter.getWriterFor(defaultFile))
+
+  writers.push(new Writer() {
+    override def flush(): Unit = ()
+    override def write(cbuf: Array[Char], off: Int, len: Int): Unit = ()
+    override def close(): Unit = ()
+  })
 
   override def write(cbuf: Array[Char], off: Int, len: Int): Unit = {
     buffer.write(cbuf, off, len)
@@ -50,7 +55,7 @@ class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWrite
     val file = Option(m.group("filesq")).orElse(Option(m.group("filedq")))
     val endtag = Option(m.group("end"))
     if (file.isDefined) {
-      writers.push(templateWriter.getWriterFor(file.get))
+      writers.push(templateWriter.getWriterFor(defaultFile, file))
     } else if (endtag.isDefined) {
       writers.top.close()
       writers.pop()

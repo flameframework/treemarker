@@ -48,7 +48,7 @@ object Generator {
       ActionCall(view, Seq(PropertyValue(inbox, mails)), Some(Variable("newItemCount", IntegerType)))
     ))
 
-    generate("swift", "output", InteractionModel(
+    generate("swift", "output/flameswift/flameswift", InteractionModel(
       Seq(Inbox, Mail),
       Seq(refresh, view),
       Seq(open)
