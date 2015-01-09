@@ -4,10 +4,6 @@ import java.io.{Writer, Reader}
 
 import scala.util.matching.Regex
 
-trait Token
-case class Tag(pattern: String, contents: String) extends Token
-case class Literal(literal: String) extends Token
-
 /**
  * Created by michel on 09-01-15.
  */
