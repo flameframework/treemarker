@@ -5,7 +5,7 @@ package com.github.mvollebregt.flame.compiler
  */
 object TagParser {
 
-  private val splitEx = "(?:[^\\s=]+)(?:\\s*=\\s*(?:(?:\"[^\"]*\")|(?:'[^\"]*')|(?:[^\\s]*)))?".r
+  private val splitEx = "(?:[^\\s=]+)(?:\\s*=\\s*(?:(?:\"[^\"]*\")|(?:'[^\']*')|(?:[^\\s]*)))?".r
 
   private def withoutQuotes(s: String) : String = {
     if ((s.startsWith("\'") && s.endsWith("\'")) || (s.startsWith("\"") && s.endsWith("\""))) {

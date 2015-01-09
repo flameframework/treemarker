@@ -1,66 +1,49 @@
 package com.github.mvollebregt.flame.compiler
 
+import freemarker.template.utility.NullWriter
+
 import scala.collection.mutable
-import scala.util.matching.Regex
-import scala.util.matching.Regex._
-import java.io.{StringWriter, Writer}
+import java.io.Writer
 
 /**
  * Created by michel on 21-11-14.
  */
-class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWriter) extends Writer {
+class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWriter) extends TokenWriter {
 
-  val startTagSingleQuote = "\\<&\\s*output\\s+file\\s*=\\s*'([^']*)'\\s*>"
-  val startTagDoubleQuote = "\\<&\\s*output\\s+file\\s*=\\s*\"([^\"]*)\"\\s*>"
-  val endTag = "\\</&\\s*output\\s*>"
+  private val startTag = "\\<&(?:(?:\"[^\"]*\"?|'[^'?]*'|[^'\">]*)*)>?"
+  private val endTag = "\\</&(?:(?:\"[^\"]*\"?|'[^'?]*'|[^'\">]*)*)>?"
 
-  val anyTag = new Regex(s"(?:$startTagSingleQuote)|(?:$startTagDoubleQuote)|($endTag)", "filesq", "filedq", "end")
-  private val buffer = new StringWriter()
-  val writers = new mutable.Stack[Writer]
+  val tokenizer = new Tokenizer(this, startTag, endTag)
 
-  writers.push(new Writer() {
-    override def flush(): Unit = ()
-    override def write(cbuf: Array[Char], off: Int, len: Int): Unit = ()
-    override def close(): Unit = ()
-  })
+  private val writers = new mutable.Stack[Writer]
+  writers.push(NullWriter.INSTANCE)
 
-  override def write(cbuf: Array[Char], off: Int, len: Int): Unit = {
-    buffer.write(cbuf, off, len)
+  override def writeLiteral(literal: String): Unit = writers.top.write(literal)
+
+  override def writeTag(tagPattern: String, contents: String): Unit = {
+    tagPattern match {
+      case `startTag` => {
+        TagParser.parse(contents.substring(2, contents.length - 1)) match {
+          case ("output", attributes) => {
+            val file = attributes.get("file").flatten
+            val overwrite = attributes.get("overwrite").flatten.map(_.trim.toLowerCase) != Some("false")
+            val writerFor: Writer = templateWriter.getWriterFor(defaultFile, file, overwrite)
+            writers.push(writerFor)
+          }
+          case _ => throw new Exception
+        }
+      }
+      case `endTag` => {
+        writers.top.close()
+        writers.pop()
+      }
+    }
   }
 
   override def flush(): Unit = ()
 
   override def close(): Unit = {
-    writeAll(0)
     while (writers.nonEmpty) writers.pop().close()
-  }
-
-  private def writeAll(offset: Int) : Unit = {
-    val text = buffer.toString.substring(offset)
-    if (!text.isEmpty) {
-      val processed = anyTag.findFirstMatchIn(text) match {
-        case Some(m) => writePart(text.substring(0, m.start)); processTag(m)
-        case None => writePart(text)
-      }
-      writeAll(offset + processed)
-    }
-  }
-
-  private def writePart(text : String) : Int = {
-    writers.top.write(text)
-    text.length
-  }
-
-  private def processTag(m: Match) : Int = {
-    val file = Option(m.group("filesq")).orElse(Option(m.group("filedq")))
-    val endtag = Option(m.group("end"))
-    if (file.isDefined) {
-      writers.push(templateWriter.getWriterFor(defaultFile, file))
-    } else if (endtag.isDefined) {
-      writers.top.close()
-      writers.pop()
-    }
-    m.end
   }
 
 

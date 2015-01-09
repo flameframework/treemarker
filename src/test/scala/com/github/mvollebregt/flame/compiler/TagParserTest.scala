@@ -30,11 +30,17 @@ class TagParserTest extends FlatSpec {
     assert(value == ("tagname", Map("attribute" -> Some("value"))))
   }
 
-  it should "parse attributes with quotes" in {
+  it should "parse multiple attributes" in {
+    val value = parse("tagname first='1' second='2'")
+    assert(value == ("tagname", Map("first" -> Some("1"), "second" -> Some("2"))))
+  }
+
+  it should "parse attributes with different quotes" in {
     // when
     val value = parse("tagname first=\"1\" second='2'")
     // then
     assert(value == ("tagname", Map("first" -> Some("1"), "second" -> Some("2"))))
   }
+
 
 }

@@ -18,7 +18,7 @@ object Generator {
 
     for (template <- templateReader.listTemplates) {
       val temp = templateReader.getTemplate(template)
-      tryWithResource(new FreemarkerWriterWrapper(template, templateWriter)) { writer =>
+      tryWithResource(new FreemarkerWriterWrapper(template, templateWriter).tokenizer) { writer =>
         temp.process(interactionModel, writer)
       }
     }
@@ -48,7 +48,7 @@ object Generator {
       ActionCall(view, Seq(PropertyValue(inbox, mails)), Some(Variable("newItemCount", IntegerType)))
     ))
 
-    generate("swift", "output/flameswift/flameswift", InteractionModel(
+    generate("swift", "../flame-ios/flame-ios", InteractionModel(
       Seq(Inbox, Mail),
       Seq(refresh, view),
       Seq(open)

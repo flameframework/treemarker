@@ -2,7 +2,6 @@ package com.github.mvollebregt.flame.compiler
 
 import java.io.{Writer, Reader}
 
-import scala.annotation.tailrec
 import scala.util.matching.Regex
 
 trait Token

@@ -2,8 +2,10 @@ package com.github.mvollebregt.flame.compiler
 
 import java.io.{StringWriter, PrintWriter}
 
+import freemarker.template.utility.NullWriter
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
+import org.mockito.Matchers._
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.FlatSpec
@@ -18,7 +20,7 @@ class FreemarkerWriterWrapperTest extends FlatSpec with MockitoSugar {
     val templateWriter = mock[TemplateWriter]
     val defaultOutput = new StringWriter()
     when(templateWriter.getWriterFor("default file")).thenReturn(defaultOutput)
-    val processor = new PrintWriter(new FreemarkerWriterWrapper("default file", templateWriter))
+    val processor = new PrintWriter(new FreemarkerWriterWrapper("default file", templateWriter).tokenizer)
   }
 
 //  "A template without file output markers" should "write a copy of the template to the default file" in new Fixture {
@@ -33,7 +35,7 @@ class FreemarkerWriterWrapperTest extends FlatSpec with MockitoSugar {
   "A template with a file output marker with single quote" should "write the inner contents to the specified output" in new Fixture {
     // given
     val specifiedOutput = new StringWriter()
-    when(templateWriter.getWriterFor("default file", Some("specified name"))).thenReturn(specifiedOutput)
+    when(templateWriter.getWriterFor("default file", Some("specified name"), true)).thenReturn(specifiedOutput)
     // when
     processor.println("<&output file='specified name'>inner contents</&output>")
     processor.close()
@@ -45,12 +47,21 @@ class FreemarkerWriterWrapperTest extends FlatSpec with MockitoSugar {
   "A template with a file output marker with double quote" should "write the inner contents to the specified output" in new Fixture {
     // given
     val specifiedOutput = new StringWriter()
-    when(templateWriter.getWriterFor("default file", Some("another specified name"))).thenReturn(specifiedOutput)
+    when(templateWriter.getWriterFor("default file", Some("another specified name"), true)).thenReturn(specifiedOutput)
     // when
     processor.println("<&output file=\"another specified name\">other inner contents</&output>")
     processor.close()
     // then
     assert(specifiedOutput.toString == "other inner contents")
+  }
+
+  "The writer" should "be able to check if a file already exists" in new Fixture {
+    when(templateWriter.getWriterFor(any[String], any[Option[String]], anyBoolean)).thenReturn(NullWriter.INSTANCE)
+    // when
+    processor.println("<&output file='specified name' overwrite='false'>inner contents</&output>")
+    processor.close()
+    // then
+    verify(templateWriter).getWriterFor("default file", Some("specified name"), false)
   }
 
 }
