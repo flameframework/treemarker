@@ -1,6 +1,6 @@
 package com.github.mvollebregt.flame.compiler
 
-import java.io.{Writer, Reader}
+import java.io.Writer
 
 import scala.util.matching.Regex
 
