@@ -1,16 +1,18 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker.parser
 
 /**
  * Created by michel on 09-01-15.
  */
-trait TokenWriter {
+trait TokenProcessor {
+
+  def tagPatterns : Seq[String]
 
   def writeTag(tagPattern: String, contents: String) : Unit
 
   def writeLiteral(literal: String) : Unit
 
-  def flush(): Unit
+  def onFlush(): Unit
 
-  def close(): Unit
+  def onClose(): Unit
 
 }

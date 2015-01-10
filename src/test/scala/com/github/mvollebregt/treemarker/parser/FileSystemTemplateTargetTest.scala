@@ -1,24 +1,26 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker.parser
 
-import java.io.PrintWriter
 import java.io.File._
-import scala.io.Source._
+import java.io.PrintWriter
 
+import com.github.mvollebregt.treemarker.FileSystemTemplateTarget
 import com.github.mvollebregt.util.AutoCloseableUtils._
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 
+import scala.io.Source._
+
 /**
  * Created by michel on 09-01-15.
  */
 @RunWith(classOf[JUnitRunner])
-class FileSystemTemplateWriterTest extends FlatSpec {
+class FileSystemTemplateTargetTest extends FlatSpec {
 
   trait Fixture {
     val existingFile = createTempFile("file_for_test_purposes", null)
     tryWithResource(new PrintWriter(existingFile)) { writer => writer.print("content was not overwritten") }
-    val templateWriter = new FileSystemTemplateWriter(existingFile.getParentFile)
+    val templateWriter = new FileSystemTemplateTarget(existingFile.getParentFile)
   }
 
   "A template writer" should "overwrite an existing file by default" in new Fixture {

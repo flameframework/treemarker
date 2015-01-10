@@ -1,19 +1,21 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker.parser
 
+import java.io.Writer
+
+import com.github.mvollebregt.treemarker.TemplateTarget
 import freemarker.template.utility.NullWriter
 
 import scala.collection.mutable
-import java.io.Writer
 
 /**
  * Created by michel on 21-11-14.
  */
-class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWriter) extends TokenWriter {
+class TreeMarkerTokenProcessor(defaultFile: String, templateWriter: TemplateTarget) extends TokenProcessor {
 
-  private val startTag = "\\<&(?:(?:\"[^\"]*\"?|'[^'?]*'|[^'\">]*)*)>?"
-  private val endTag = "\\</&(?:(?:\"[^\"]*\"?|'[^'?]*'|[^'\">]*)*)>?"
+  private val startTag = "<&(?:(?:\"[^\"]*\"|'[^']*'|[^'\">]*)*)>"
+  private val endTag = "</&(?:(?:\"[^\"]*\"|'[^']*'|[^'\">]*)*)>"
 
-  val tokenizer = new Tokenizer(this, startTag, endTag)
+  def tagPatterns = Seq(startTag, endTag)
 
   private val writers = new mutable.Stack[Writer]
   writers.push(NullWriter.INSTANCE)
@@ -40,9 +42,9 @@ class FreemarkerWriterWrapper(defaultFile: String, templateWriter: TemplateWrite
     }
   }
 
-  override def flush(): Unit = ()
+  override def onFlush(): Unit = ()
 
-  override def close(): Unit = {
+  override def onClose(): Unit = {
     while (writers.nonEmpty) writers.pop().close()
   }
 

@@ -1,8 +1,7 @@
 package com.github.mvollebregt.flame.compiler
 
 import com.github.mvollebregt.flame.compiler.domain._
-import freemarker.ext.beans.{BeanModel, BeansWrapper}
-
+import freemarker.ext.beans.BeanModel
 import freemarker.template._
 
 /**

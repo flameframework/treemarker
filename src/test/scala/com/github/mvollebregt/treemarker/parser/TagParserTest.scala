@@ -1,8 +1,7 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker.parser
 
+import com.github.mvollebregt.treemarker.parser.TagParser._
 import org.scalatest.FlatSpec
-
-import com.github.mvollebregt.flame.compiler.TagParser._
 
 /**
  * Created by michel on 09-01-15.

@@ -1,4 +1,4 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker.parser
 
 import java.io.Writer
 
@@ -7,7 +7,9 @@ import scala.util.matching.Regex
 /**
  * Created by michel on 09-01-15.
  */
-class Tokenizer(tokenWriter: TokenWriter, tagPatterns: String*) extends Writer {
+class TokenizingWriter(tokenWriter: TokenProcessor) extends Writer {
+
+  private val tagPatterns = tokenWriter.tagPatterns
 
   private val anyTag = new Regex(tagPatterns.mkString("(", ")|(",")"), tagPatterns :_*)
 
@@ -35,11 +37,11 @@ class Tokenizer(tokenWriter: TokenWriter, tagPatterns: String*) extends Writer {
 
   }
 
-  override def flush(): Unit = tokenWriter.flush()
+  override def flush(): Unit = tokenWriter.onFlush()
 
   override def close(): Unit = {
     tokenWriter.writeLiteral(buffer.toString)
     buffer.clear()
-    tokenWriter.close()
+    tokenWriter.onClose()
   }
 }

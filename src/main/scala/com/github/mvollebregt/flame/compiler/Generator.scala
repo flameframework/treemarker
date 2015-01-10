@@ -1,10 +1,8 @@
 package com.github.mvollebregt.flame.compiler
 
-import java.io.File
-
-import com.github.mvollebregt.flame.compiler.action.{ActionCall, ComposedAction, Action, InteractionModel}
-import com.github.mvollebregt.util.AutoCloseableUtils._
+import com.github.mvollebregt.flame.compiler.action.{Action, ActionCall, ComposedAction, InteractionModel}
 import com.github.mvollebregt.flame.compiler.domain._
+import com.github.mvollebregt.treemarker.TreeMarker
 
 /**
  * Created by michel on 21-11-14.
@@ -12,16 +10,8 @@ import com.github.mvollebregt.flame.compiler.domain._
 object Generator {
 
   def generate(platform: String, target: String, interactionModel: InteractionModel): Unit = {
-
-    val templateReader = new ClasspathTemplateReader(platform)
-    val templateWriter = new FileSystemTemplateWriter(new File(target))
-
-    for (template <- templateReader.listTemplates) {
-      val temp = templateReader.getTemplate(template)
-      tryWithResource(new FreemarkerWriterWrapper(template, templateWriter).tokenizer) { writer =>
-        temp.process(interactionModel, writer)
-      }
-    }
+    val objectWrapper = new FlameObjectWrapper(TreeMarker.version)
+    TreeMarker.generate(s"flame/$platform/", target, interactionModel, Some(objectWrapper))
   }
 
   def main(args: Array[String]) = {

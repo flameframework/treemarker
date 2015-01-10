@@ -1,11 +1,11 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker
 
-import java.io.{Writer, FileOutputStream, OutputStream}
+import java.io.Writer
 
 /**
  * Created by michel on 22-11-14.
  */
-trait TemplateWriter {
+trait TemplateTarget {
 
   def getWriterFor(template: String, output: Option[String] = None, overwrite : Boolean = true) : Writer
 

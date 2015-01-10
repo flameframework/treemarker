@@ -1,4 +1,4 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker
 
 import java.io.{File, FileWriter, Writer}
 
@@ -7,7 +7,7 @@ import freemarker.template.utility.NullWriter
 /**
  * Created by michel on 21-11-14.
  */
-class FileSystemTemplateWriter(target: File) extends TemplateWriter {
+class FileSystemTemplateTarget(target: File) extends TemplateTarget {
 
   override def getWriterFor(template: String, output: Option[String], overwrite: Boolean): Writer = {
     val base = new File(target, template)

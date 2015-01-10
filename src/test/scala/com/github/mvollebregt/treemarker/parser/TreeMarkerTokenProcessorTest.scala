@@ -1,26 +1,27 @@
-package com.github.mvollebregt.flame.compiler
+package com.github.mvollebregt.treemarker.parser
 
-import java.io.{StringWriter, PrintWriter}
+import java.io.{PrintWriter, StringWriter}
 
+import com.github.mvollebregt.treemarker.TemplateTarget
 import freemarker.template.utility.NullWriter
 import org.junit.runner.RunWith
-import org.mockito.Mockito._
 import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
-import org.scalatest.FlatSpec
 
 /**
  * Created by michel on 22-11-14.
  */
 @RunWith(classOf[JUnitRunner])
-class FreemarkerWriterWrapperTest extends FlatSpec with MockitoSugar {
+class TreeMarkerTokenProcessorTest extends FlatSpec with MockitoSugar {
 
   trait Fixture {
-    val templateWriter = mock[TemplateWriter]
+    val templateWriter = mock[TemplateTarget]
     val defaultOutput = new StringWriter()
     when(templateWriter.getWriterFor("default file")).thenReturn(defaultOutput)
-    val processor = new PrintWriter(new FreemarkerWriterWrapper("default file", templateWriter).tokenizer)
+    val processor = new PrintWriter(new TokenizingWriter(new TreeMarkerTokenProcessor("default file", templateWriter)))
   }
 
 //  "A template without file output markers" should "write a copy of the template to the default file" in new Fixture {
