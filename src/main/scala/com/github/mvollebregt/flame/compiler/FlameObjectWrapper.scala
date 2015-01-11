@@ -20,8 +20,8 @@ class FlameObjectWrapper(version: Version) extends DefaultObjectWrapper(version)
   private def asString(typeObj : Type) : String = typeObj match {
     case (IntegerType) => "NSInteger"
     case (StringType) => "NSString"
-    case (domainClass: DomainClass) => s"${domainClass.getName}*"
-    case (listType: ListType) => "NSMutableArray*"
+    case (domainClass: DomainClass) => s"${domainClass.getName}"
+    case (listType: ListType) => "NSMutableArray"
   }
 
   private def asString(value: Value) : String = value match {
