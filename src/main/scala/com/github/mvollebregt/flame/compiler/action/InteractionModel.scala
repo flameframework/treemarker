@@ -7,9 +7,9 @@ import scala.collection.JavaConversions._
 /**
  * Created by michel on 16-11-14.
  */
-class InteractionModel (domainClasses : java.lang.Iterable[DomainClass] ,
-                        nativeActions: java.lang.Iterable[Action],
-                        composedActions : java.lang.Iterable[ComposedAction]) {
+class InteractionModel (domainClasses : java.util.List[DomainClass] ,
+                        nativeActions: java.util.List[Action],
+                        composedActions : java.util.List[ComposedAction]) {
 
   def getDomainClasses = domainClasses
   def getNativeActions = nativeActions

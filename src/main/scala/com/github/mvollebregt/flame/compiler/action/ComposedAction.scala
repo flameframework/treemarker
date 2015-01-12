@@ -8,9 +8,9 @@ import scala.collection.JavaConversions._
  * Created by michel on 13-12-14.
  */
 class ComposedAction(name: String,
-                      inputVariables: java.lang.Iterable[Variable],
+                      inputVariables: java.util.List[Variable],
                       outputVariable: Variable,
-                      actionCalls: java.lang.Iterable[ActionCall]) extends Action(name, inputVariables, outputVariable.getType) {
+                      actionCalls: java.util.List[ActionCall]) extends Action(name, inputVariables, outputVariable.getType) {
 
   val getActionCalls = actionCalls
   val getOutputVariable = outputVariable

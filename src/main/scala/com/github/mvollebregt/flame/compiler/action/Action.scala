@@ -8,7 +8,7 @@ import scala.collection.JavaConversions._
  * Created by michel on 13-12-14.
  */
 class Action(name: String,
-                      inputVariables: java.lang.Iterable[Variable] = Nil,
+                      inputVariables: java.util.List[Variable] = Nil,
                       outputType: Type = null) {
 
   def getName = name
