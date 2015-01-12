@@ -1,6 +1,6 @@
-package com.github.mvollebregt.treemarker
+package com.github.flameframework.treemarker
 
-import com.github.mvollebregt.util.PathScanner._
+import com.github.flameframework.util.PathScanner._
 import freemarker.template._
 
 /**

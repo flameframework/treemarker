@@ -1,10 +1,10 @@
-package com.github.mvollebregt.treemarker.parser
+package com.github.flameframework.treemarker.parser
 
 import java.io.File._
 import java.io.PrintWriter
 
-import com.github.mvollebregt.treemarker.FileSystemTemplateTarget
-import com.github.mvollebregt.util.AutoCloseableUtils._
+import com.github.flameframework.treemarker.FileSystemTemplateTarget
+import com.github.flameframework.util.AutoCloseableUtils._
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner

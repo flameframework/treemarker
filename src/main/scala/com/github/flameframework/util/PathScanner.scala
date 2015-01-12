@@ -1,9 +1,9 @@
-package com.github.mvollebregt.util
+package com.github.flameframework.util
 
 import scala.collection.JavaConverters._
 import java.io.File
 import java.util.zip.ZipFile
-import com.github.mvollebregt.util.AutoCloseableUtils._
+import com.github.flameframework.util.AutoCloseableUtils._
 
 /**
  * Created by michel on 21-11-14.

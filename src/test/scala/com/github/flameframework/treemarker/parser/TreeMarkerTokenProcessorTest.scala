@@ -1,8 +1,8 @@
-package com.github.mvollebregt.treemarker.parser
+package com.github.flameframework.treemarker.parser
 
 import java.io.{PrintWriter, StringWriter}
 
-import com.github.mvollebregt.treemarker.TemplateTarget
+import com.github.flameframework.treemarker.TemplateTarget
 import freemarker.template.utility.NullWriter
 import org.junit.runner.RunWith
 import org.mockito.Matchers._

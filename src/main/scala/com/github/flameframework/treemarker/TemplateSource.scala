@@ -1,4 +1,4 @@
-package com.github.mvollebregt.treemarker
+package com.github.flameframework.treemarker
 
 import freemarker.template.Template
 

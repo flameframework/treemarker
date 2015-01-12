@@ -1,10 +1,10 @@
-package com.github.mvollebregt.treemarker
+package com.github.flameframework.treemarker
 
 import java.io.File
 
-import com.github.mvollebregt.flame.compiler.action.InteractionModel
-import com.github.mvollebregt.treemarker.parser.{TokenizingWriter, TreeMarkerTokenProcessor}
-import com.github.mvollebregt.util.AutoCloseableUtils._
+import com.github.flameframework.compiler.action.InteractionModel
+import com.github.flameframework.treemarker.parser.{TokenizingWriter, TreeMarkerTokenProcessor}
+import com.github.flameframework.util.AutoCloseableUtils._
 import freemarker.template.{Configuration, Version, ObjectWrapper}
 
 /**

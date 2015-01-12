@@ -1,4 +1,4 @@
-package com.github.mvollebregt.util
+package com.github.flameframework.util
 
 import scala.util.matching.Regex
 

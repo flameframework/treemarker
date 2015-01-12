@@ -1,4 +1,4 @@
-package com.github.mvollebregt.treemarker.parser
+package com.github.flameframework.treemarker.parser
 
 /**
  * Created by michel on 09-01-15.

@@ -1,4 +1,4 @@
-package com.github.mvollebregt.util
+package com.github.flameframework.util
 
 /**
  * Created by michel on 21-11-14.
