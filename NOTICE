@@ -1,0 +1,14 @@
+Flame compiler
+Copyright 2015 Michel Vollebregt
+
+The Flame Framework is licensed by Michel Vollebregt
+under the Apache License, Version 2.0.
+
+FreeMarker is licensed by Attila Szegedi, Daniel Dekany,
+Jonathan Revusky under the Apache License, Version 2.0.
+This is the same license as the license of the Flame
+Framework, but the copyright owner is different
+(http://github.com/freemarker).
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
