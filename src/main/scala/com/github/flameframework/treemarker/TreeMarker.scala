@@ -18,7 +18,6 @@ package com.github.flameframework.treemarker
 
 import java.io.File
 
-import com.github.flameframework.compiler.action.InteractionModel
 import com.github.flameframework.treemarker.parser.{TokenizingWriter, TreeMarkerTokenProcessor}
 import com.github.flameframework.util.AutoCloseableUtils._
 import freemarker.template.{Configuration, Version, ObjectWrapper}
@@ -46,7 +45,7 @@ object TreeMarker {
 
   def generate(classpathPrefix: String,
                target: String,
-               dataModel: InteractionModel,
+               dataModel: Any,
                objectWrapper: Option[ObjectWrapper] = None): Unit = {
     
     val templateSource = new ClasspathTemplateSource(classpathPrefix, objectWrapper)
