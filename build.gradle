@@ -1,4 +1,7 @@
 apply plugin: 'scala'
+  
+group = 'com.github.flameframework'
+version = '1.0-SNAPSHOT'
 
 sourceCompatibility = '1.7'
 
