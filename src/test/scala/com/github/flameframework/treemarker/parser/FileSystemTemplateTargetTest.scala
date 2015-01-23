@@ -21,16 +21,13 @@ import java.io.PrintWriter
 
 import com.github.flameframework.treemarker.FileSystemTemplateTarget
 import com.github.flameframework.util.AutoCloseableUtils._
-import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
-import org.scalatest.junit.JUnitRunner
 
 import scala.io.Source._
 
 /**
  * Created by michel on 09-01-15.
  */
-@RunWith(classOf[JUnitRunner])
 class FileSystemTemplateTargetTest extends FlatSpec {
 
   trait Fixture {

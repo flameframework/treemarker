@@ -20,17 +20,14 @@ import java.io.{PrintWriter, StringWriter}
 
 import com.github.flameframework.treemarker.TemplateTarget
 import freemarker.template.utility.NullWriter
-import org.junit.runner.RunWith
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import org.scalatest.FlatSpec
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 
 /**
  * Created by michel on 22-11-14.
  */
-@RunWith(classOf[JUnitRunner])
 class TreeMarkerTokenProcessorTest extends FlatSpec with MockitoSugar {
 
   trait Fixture {
