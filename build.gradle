@@ -21,6 +21,7 @@ dependencies {
 // make gradle run scala tests instead of java tests
 // first remove the old test task
 check.dependsOn -= test
+def testGroup = test.group
 
 // now define a new test task
 task test(overwrite: true, dependsOn: ['testClasses'], type: JavaExec) {
@@ -28,6 +29,7 @@ task test(overwrite: true, dependsOn: ['testClasses'], type: JavaExec) {
   args = ['-R', 'build/classes/test', '-o']
   classpath = sourceSets.test.runtimeClasspath
 }
+test.group = testGroup
 
 // now add the dependency to the new test task
 check.dependsOn += test
